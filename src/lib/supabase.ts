@@ -7,9 +7,9 @@ if (!url || !key) {
   throw new Error('Mancano VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY: copia .env.example in .env e compilalo.')
 }
 
-// Nessun account: niente sessione da salvare o rinnovare.
+// Accesso con account (email e password): la sessione resta salvata nel browser e si rinnova da sola.
 export const supabase = createClient(url, key, {
-  auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
+  auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false },
   realtime: { params: { eventsPerSecond: 20 } },
 })
 

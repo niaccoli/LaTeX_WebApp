@@ -1,3 +1,4 @@
+import { useAuth } from '../lib/auth'
 import { useState } from 'react'
 import { Link, Outlet, useMatch } from 'react-router-dom'
 import { useApp } from '../lib/app-context'
@@ -6,6 +7,7 @@ import { PromptModal } from './Modal'
 
 export function Layout() {
   const { nickname, setNickname } = useApp()
+  const { email, signOut } = useAuth()
   const [theme, setThemeState] = useState<Theme>(() => getTheme())
   const [editingNick, setEditingNick] = useState(false)
   // La pagina del documento (editor + anteprima) occupa tutta la finestra
@@ -27,6 +29,9 @@ export function Layout() {
           <button className="btn btn-ghost" onClick={() => setEditingNick(true)} title="Cambia nickname">
             <span className="avatar">{(nickname ?? '?').slice(0, 1).toUpperCase()}</span>
             <span className="hide-narrow">{nickname ?? 'Scegli un nickname'}</span>
+          </button>
+          <button className="btn btn-ghost" onClick={() => void signOut()} title={`Accesso come ${email}`}>
+            Esci
           </button>
           <button className="btn btn-ghost" onClick={toggleTheme} aria-label={theme === 'dark' ? 'Passa al tema chiaro' : 'Passa al tema scuro'}>
             {theme === 'dark' ? '☀' : '☾'}

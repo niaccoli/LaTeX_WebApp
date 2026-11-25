@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
 import { AppProvider } from './lib/app-context'
+import { AuthGate } from './lib/auth'
 import { Layout } from './components/Layout'
 import { Home } from './pages/Home'
 import { FullCoursePage } from './pages/FullCoursePage'
@@ -22,6 +23,7 @@ function NotFound() {
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
+      <AuthGate>
       <AppProvider>
         <Routes>
           <Route element={<Layout />}>
@@ -34,6 +36,7 @@ createRoot(document.getElementById('root')!).render(
           </Route>
         </Routes>
       </AppProvider>
+      </AuthGate>
     </BrowserRouter>
   </StrictMode>,
 )

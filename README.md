@@ -116,3 +116,15 @@ supabase/
 - **Piano gratuito di Supabase.** Un progetto senza attività per circa una settimana viene messo in pausa e va riattivato dal pannello di Supabase. Il database gratuito ha 500 MB, condivisi tra testi, cronologia (potata in automatico) e immagini (tetto di 250 MB in tutto).
 - **Senza account non c'è identità.** Il nickname è solo un'etichetta: chiunque può sceglierne uno qualsiasi. I limiti per IP frenano il vandalismo ma non lo impediscono; per i corsi a cui si tiene c'è il codice di modifica, e in ogni caso cestino e cronologia permettono di tornare indietro.
 - **Una compilazione alla volta mostra un errore alla volta.** pdfLaTeX si ferma al primo errore: corretto quello, al salvataggio successivo compare l'eventuale prossimo.
+
+## Accesso riservato (account)
+
+Il sito si apre solo dopo il login con email e password. Cosa lo rende sicuro non è la pagina di accesso, ma il database:
+
+- `supabase/members_only.sql` (già applicato al progetto) toglie la lettura pubblica e consente lettura e scrittura solo agli account la cui email è nella tabella `private.allowed_emails`. Il controllo è la funzione `public.is_member()`.
+- Per aggiungere una persona: in Supabase → Authentication → Users → **Add user → Create new user** (email + password, con *Auto Confirm User*), poi in SQL Editor:
+  `insert into private.allowed_emails (email) values ('nome@esempio.it');`
+- Per toglierla: `delete from private.allowed_emails where email = 'nome@esempio.it';` (e, se vuoi, elimina l'utente da Authentication).
+- Conviene spegnere **Allow new users to sign up** (Authentication → Sign In / Providers): senza, chiunque può creare un account, ma senza essere in elenco non vede né modifica nulla.
+- Non c'è l'invio di email: la password si cambia dalla dashboard (Authentication → Users).
+- I codici di modifica dei corsi restano un livello in più sopra all'accesso.
