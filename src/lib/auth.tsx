@@ -56,7 +56,7 @@ export function AuthGate({ children }: { children: ReactNode }) {
 
   const signOut = useCallback(async () => {
     await supabase.auth.signOut()
-    window.location.assign('/')
+    window.location.assign(import.meta.env.BASE_URL)
   }, [])
 
   const value = useMemo(() => ({ email: session?.user.email ?? '', signOut }), [session, signOut])

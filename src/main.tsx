@@ -22,7 +22,7 @@ function NotFound() {
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <AuthGate>
       <AppProvider>
         <Routes>
